@@ -1,6 +1,16 @@
-var formComponent = (function () {
-  var form = {}
-  function addItem(list, itemText){
+var formComponet = function (input) {
+
+  var arrayItems = [];
+  var arrayIds = [];
+  var item = document.getElementById(input);
+  item.focus();
+  var addButton = document.getElementById('addButton');
+  addButton.onclick = trigrerActionAddItem;
+  item.onkeyup = identifyKey;
+  var btnSubmitList = document.getElementById('btn_submit_list');
+  btnSubmitList.onclick = submitList;
+
+  addItem = function(listObj, itemText){
     var date = new Date();
     var id = "" + date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds();
 
@@ -8,7 +18,7 @@ var formComponent = (function () {
     var text = document.createElement('p');
     newItem.id = "li_" + id;
     text.innerText = itemText;
-    list.appendChild(newItem);
+    listObj.appendChild(newItem);
     newItem.appendChild(text);
 
     var btn_delete = document.createElement('button');
@@ -18,13 +28,22 @@ var formComponent = (function () {
     newItem.appendChild(btn_delete);
     addToArray(itemText, id);
   }
-  function deleteItem(){
+  deleteItem = function(){
     var liId = this.id.replace("btn_delete_", 'li_');
     var liRemove = document.getElementById(liId);
     liRemove.parentNode.removeChild(liRemove);
     var id = this.id.replace("btn_delete_", "");
     deleteFromArray(id);
   }
+
+   function identifyKey(e){
+    if (e.which == 13){
+      trigrerActionAddItem();
+    }else{
+      return false;
+    }
+  }
+
   function trigrerActionAddItem(){
     var itemText = item.value;
       if (itemText == "" || itemText == " "){
@@ -35,13 +54,7 @@ var formComponent = (function () {
       item.value = "";
       item.focus();
   }
-  function identifyKey(e){
-    if (e.which == 13){
-      trigrerActionAddItem();
-    }else{
-      return false;
-    }
-  }
+
   function addToArray(item, id){
     arrayItems.push(item);
     arrayIds.push(id);
@@ -67,16 +80,11 @@ var formComponent = (function () {
 
   }
 
+  return {
+    add: addItem,
+    remove: deleteItem
+  };
 
-  var arrayItems = [];
-  var arrayIds = [];
-  var item = document.getElementById('user-input');
-  item.focus();
-  var addButton = document.getElementById('addButton');
-  addButton.onclick = trigrerActionAddItem;
-  item.onkeyup = identifyKey;
-  var btnSubmitList = document.getElementById('btn_submit_list');
-  btnSubmitList.onclick = submitList;
+}('user-input');
 
 
-}());
