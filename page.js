@@ -1,4 +1,5 @@
-(function () {
+var formComponent = (function () {
+  var form = {}
   function addItem(list, itemText){
     var date = new Date();
     var id = "" + date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds();
@@ -51,21 +52,31 @@
     arrayIds.splice(index,1);
   }
   function submitList(){
-    // var http = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
+    var url = 'url' // assign url for the post request to server
+    var params = "item_list=[" + arrayItems + ']'
+    console.log (params)
     if (arrayItems.length == 0){
       console.log('nothing to submit');
     } else {
-      console.log('submit here');
+      xhr.open("POST", url, true);
+      //  add content type if necessary and handle response
+      xhr.send(params);
     }
 
 
   }
+
+
   var arrayItems = [];
   var arrayIds = [];
-    var item = document.getElementById('user-input');
-    item.focus();
-    var addButton = document.getElementById('addButton');
-    addButton.onclick = trigrerActionAddItem;
-    item.onkeyup = identifyKey;
+  var item = document.getElementById('user-input');
+  item.focus();
+  var addButton = document.getElementById('addButton');
+  addButton.onclick = trigrerActionAddItem;
+  item.onkeyup = identifyKey;
+  var btnSubmitList = document.getElementById('btn_submit_list');
+  btnSubmitList.onclick = submitList;
+
 
 }());
