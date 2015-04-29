@@ -23,10 +23,12 @@ var formComponet = function (input) {
 
     var btn_delete = document.createElement('button');
     btn_delete.id = "btn_delete_" + id;
+    btn_delete.className = "delete_btn"
     btn_delete.onclick = deleteItem;
     btn_delete.innerHTML = "delete";
     newItem.appendChild(btn_delete);
     addToArray(itemText, id);
+    updateItemCounter();
   }
   deleteItem = function(){
     var liId = this.id.replace("btn_delete_", 'li_');
@@ -34,6 +36,7 @@ var formComponet = function (input) {
     liRemove.parentNode.removeChild(liRemove);
     var id = this.id.replace("btn_delete_", "");
     deleteFromArray(id);
+    updateItemCounter();
   }
 
    function identifyKey(e){
@@ -79,7 +82,18 @@ var formComponet = function (input) {
 
 
   }
-
+  function updateItemCounter(){
+    var numItems = arrayItems.length
+    console.log(numItems)
+    var itemStatus = document.getElementById('items-status')
+    if (numItems == 0){
+      itemStatus.innerHTML = "no items in list ...."
+    }else if (numItems == 1){
+      itemStatus.innerHTML = "there is <span id='num-counter'>" + numItems + "</span> item in the list"
+    } else{
+        itemStatus.innerHTML = "there are <span id='num-counter'>" + numItems + "</span> items in the list"
+    }
+  }
   return {
     add: addItem,
     remove: deleteItem
