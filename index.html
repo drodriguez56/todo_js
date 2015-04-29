@@ -17,7 +17,7 @@
 <script>
 function addItem(list, itemText){
   var date = new Date();
-  var id = "" + date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds();
+  var id = "" + date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds();
 
   var newItem = document.createElement('li');
   var text = document.createElement('p');
@@ -31,12 +31,14 @@ function addItem(list, itemText){
   btn_delete.onclick = deleteItem;
   btn_delete.innerHTML = "delete";
   newItem.appendChild(btn_delete);
-
+  addToArray(itemText, id)
 }
 function deleteItem(){
   var liId = this.id.replace("btn_delete_", 'li_');
   var liRemove = document.getElementById(liId);
   liRemove.parentNode.removeChild(liRemove);
+  var id = this.id.replace("btn_delete_", "");
+  deleteFromArray(id)
 }
 function trigrerActionAddItem(){
   var itemText = item.value;
@@ -55,6 +57,17 @@ function identifyKey(e){
     return false;
   }
 }
+function addToArray(item, id){
+  arrayItems.push(item);
+  arrayIds.push(id);
+}
+function deleteFromArray(id){
+  var index = arrayIds.indexOf(id);
+  arrayItems.splice(index,1);
+  arrayIds.splice(index,1);
+}
+var arrayItems = [];
+var arrayIds = [];
   var item = document.getElementById('user-input');
   item.focus()
   var addButton = document.getElementById('addButton')
