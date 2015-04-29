@@ -71,7 +71,6 @@ var formComponet = function (input) {
     var xhr = new XMLHttpRequest();
     var url = 'url' // assign url for the post request to server
     var params = "item_list=[" + arrayItems + ']'
-    console.log (params)
     if (arrayItems.length == 0){
       console.log('nothing to submit');
     } else {
@@ -84,14 +83,13 @@ var formComponet = function (input) {
   }
   function updateItemCounter(){
     var numItems = arrayItems.length
-    console.log(numItems)
     var itemStatus = document.getElementById('items-status')
     if (numItems == 0){
-      itemStatus.innerHTML = "no items in list ...."
+      itemStatus.innerHTML = "No items in list ...."
     }else if (numItems == 1){
-      itemStatus.innerHTML = "there is <span id='num-counter'>" + numItems + "</span> item in the list"
+      itemStatus.innerHTML = "<span id='num-counter'>" + numItems + "</span> item in the list"
     } else{
-        itemStatus.innerHTML = "there are <span id='num-counter'>" + numItems + "</span> items in the list"
+        itemStatus.innerHTML = "<span id='num-counter'>" + numItems + "</span> items in the list"
     }
   }
   return {
